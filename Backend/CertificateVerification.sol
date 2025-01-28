@@ -36,6 +36,9 @@ contract CertificateVerification {
     // Mapping of pending certificate IDs to PendingCertificate structs
     mapping(bytes32 => PendingCertificate) public pendingCertificates;
 
+    // Mapping of revocation reseason
+    mapping(bytes32 => string) public revocationReasons;
+
     //Array to hold the addresses of  authorizedSigners
     address[] public authorizedSigners;
 
@@ -155,12 +158,13 @@ contract CertificateVerification {
     }
 
     // Function to revoke a certificate
-    function revokeCertificate(bytes32 certificateId) public onlyAuthorizedSigner {
-        require(certificates[certificateId].issueDate != 0, "Certificate does not exist");
-        certificates[certificateId].isRevoked = true;
+    function revokeCertificate(bytes32 certificateId, string memory reason) public onlyAuthorizedSigner {
+    require(certificates[certificateId].issueDate != 0, "Certificate does not exist");
+    certificates[certificateId].isRevoked = true;
+    revocationReasons[certificateId] = reason;
 
-        emit CertificateRevoked(certificateId);
-    }
+    emit CertificateRevoked(certificateId);
+}
 
     // Function to verify a certificate
     function verifyCertificate(bytes32 certificateId) public view returns (bool, string memory) {
