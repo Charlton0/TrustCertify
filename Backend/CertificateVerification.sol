@@ -4,7 +4,9 @@
 // Allows three kinds of users; institutions that issue certificates, certificate holders, verifiers
 // Institutions issue certificates and can revoke them in case of fraud
 // Employs Multisignature verification mechanism to either issue or revoke certificates
-
+// The contract also allows transfer of certifiate ownership,
+// enables students to move their certificates between accounts, which is useful if they lose access to their original wallet or migrate to a new digital identity
+// Also allows for one to appeal against unfair revocation of academic credentials
 pragma solidity ^0.8.0;
 
 contract CertificateVerification {
@@ -16,6 +18,7 @@ contract CertificateVerification {
         string institutionName;
         uint issueDate;
         bool isRevoked;
+        address owner;
     }
 
     // Structure to represent a pending certificate approval
@@ -28,6 +31,14 @@ contract CertificateVerification {
         mapping(address => bool) approvedBy;
     }
 
+    struct RevocationAppeal {
+        address student;
+        string reason;
+        bool resolved;
+        uint approvals;
+        mapping(address => bool) approvedBy;
+    }
+
     uint public certificateCount;
 
     // Mapping of certificate IDs to Certificate structs
@@ -36,8 +47,11 @@ contract CertificateVerification {
     // Mapping of pending certificate IDs to PendingCertificate structs
     mapping(bytes32 => PendingCertificate) public pendingCertificates;
 
-    // Mapping of revocation reseason
+    // Mapping of revocation reasons 
     mapping(bytes32 => string) public revocationReasons;
+
+    // Mapping of revocation appeals
+    mapping(bytes32 => RevocationAppeal) public revocationAppeals;
 
     //Array to hold the addresses of  authorizedSigners
     address[] public authorizedSigners;
@@ -63,6 +77,10 @@ contract CertificateVerification {
         string institutionName
     );
     event CertificateApproved(bytes32 indexed certificateId, address approver);
+    event CertificateTransferred(bytes32 indexed certificateId, address newOwner);
+    event RevocationAppealed(bytes32 indexed certificateId, address student, string reason);
+    event RevocationAppealApproved(bytes32 indexed certificateId, address approver);
+    event CertificateRestored(bytes32 indexed certificateId);
 
     // Modifier to restrict access to authorized signers
     modifier onlyAuthorizedSigner() {
@@ -90,6 +108,7 @@ contract CertificateVerification {
         string memory courseName,
         string memory institutionName
     ) public onlyAuthorizedSigner returns (bytes32) {
+
         // Generate a unique certificate ID
         bytes32 certificateId = keccak256(
             abi.encodePacked(studentName, courseName, institutionName, block.timestamp)
@@ -141,7 +160,8 @@ contract CertificateVerification {
             courseName: pending.courseName,
             institutionName: pending.institutionName,
             issueDate: block.timestamp,
-            isRevoked: false
+            isRevoked: false,
+            owner: msg.sender
         });
 
         // Emit the CertificateIssued event
@@ -165,6 +185,47 @@ contract CertificateVerification {
 
     emit CertificateRevoked(certificateId);
 }
+
+    // Function to allow a certificate owner to appeal incase of unfair revocation
+    function appealRevocation(bytes32 certificateId, string memory reason) public {
+    require(certificates[certificateId].isRevoked, "Certificate is not revoked");
+    require(certificates[certificateId].owner == msg.sender, "Only certificate owner can appeal");
+
+    
+    RevocationAppeal storage appeal = revocationAppeals[certificateId];
+    appeal.student = msg.sender;
+    appeal.reason = reason;
+    appeal.resolved = false;
+    appeal.approvals = 0;
+
+    emit RevocationAppealed(certificateId, msg.sender, reason);
+}
+
+    // Function to approve a revocked certificate incase of any appeal
+    function approveRevocationAppeal(bytes32 certificateId) public onlyAuthorizedSigner {
+        RevocationAppeal storage appeal = revocationAppeals[certificateId];
+        require(!appeal.resolved, "Appeal already resolved");
+        require(!appeal.approvedBy[msg.sender], "Already approved");
+
+        appeal.approvedBy[msg.sender] = true;
+        appeal.approvals++;
+        emit RevocationAppealApproved(certificateId, msg.sender);
+
+        if (appeal.approvals >= quorum) {
+            certificates[certificateId].isRevoked = false;
+            delete revocationAppeals[certificateId];
+            emit CertificateRestored(certificateId);
+        }
+    }
+
+     // Function to transfer ownership of a certificate
+    function transferCertificate(bytes32 certificateId, address newOwner) public {
+        require(certificates[certificateId].owner == msg.sender, "Only the certificate owner can transfer");
+        require(newOwner != address(0), "Invalid address");
+        certificates[certificateId].owner = newOwner;
+        emit CertificateTransferred(certificateId, newOwner);
+    }
+
 
     // Function to verify a certificate
     function verifyCertificate(bytes32 certificateId) public view returns (bool, string memory) {
