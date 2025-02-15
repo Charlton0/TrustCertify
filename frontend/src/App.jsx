@@ -5,6 +5,7 @@ import CertificateRevocation from "./components/CertificateRevocation";
 import CertificateTransfer from "./components/CertificateTransfer";
 import AdminPanel from "./components/AdminPanel";
 import HomePage from "./components/HomePage";
+import RevocationAppeal from "./components/RevocationAppeal";
 import "./App.css";
 
 function App() {
@@ -12,12 +13,13 @@ function App() {
 
   return (
     <>
-      <CertificateIssuance />
+      {/* <CertificateIssuance /> */}
       {/* <CertificateVerification /> */}
-      {/* <CertificateRevocation/> */}
+      <CertificateRevocation/>
        {/* <CertificateTransfer /> */}
        {/* <AdminPanel/> */}
        {/* <HomePage /> */}
+       {/* <RevocationAppeal /> */}
     </>
   );
 }

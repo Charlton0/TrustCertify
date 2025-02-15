@@ -1,5 +1,5 @@
 .container {
-    width: 50%;
+    width: 80%;
     margin: 30px auto;
     padding: 20px;
     background-color: #ffffff;
@@ -8,15 +8,18 @@
 }
 h1 {
     text-align: center;
-    color: #d9534f;
+    color: #4A90E2;
 }
-label {
+.form_section {
+    margin-bottom: 20px;
+}
+.form_section label {
     font-size: 16px;
     color: #333;
     display: block;
     margin-bottom: 5px;
 }
-input, textarea {
+.form_section input, .form_section textarea {
     width: 100%;
     padding: 10px;
     font-size: 14px;
@@ -24,13 +27,12 @@ input, textarea {
     border: 1px solid #ccc;
     margin-bottom: 10px;
 }
-textarea {
+.form_section textarea {
     resize: vertical;
-    min-height: 100px;
+    min-height: 150px;
 }
-
-button {
-    background-color: #d9534f;
+.form_section button {
+    background-color: #4A90E2;
     color: white;
     padding: 12px 25px;
     border: none;
@@ -38,6 +40,14 @@ button {
     cursor: pointer;
     font-size: 16px;
 }
-button:hover {
-    background-color:#c9302c;
+.form_section button:hover {
+    background-color: #357ABD;
+}
+.upload_section {
+    margin-top: 20px;
+}
+.upload_section input[type="file"] {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
