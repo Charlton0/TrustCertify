@@ -7,6 +7,7 @@ import CertificateTransfer from "./components/CertificateTransfer";
 import AdminPanel from "./components/AdminPanel";
 import HomePage from "./components/HomePage";
 import RevocationAppeal from "./components/RevocationAppeal";
+import "w3-css/w3.css";
 import "./App.css";
 
 function App() {

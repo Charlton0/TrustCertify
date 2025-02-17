@@ -2,20 +2,21 @@ import React from 'react'
 import styles from "./HomePage.module.css"
 import { Link } from 'react-router-dom'
 
+
+
 const Navigation = () => {
   return (
-    <header>
-    <h1>Welcome to TrustCertify</h1>
-    <nav>
-            <ul>
-                <li><Link to="/certificate-issuance">Issue Certificate</Link></li>
-                <li><a href="verify-certificate.html">Verify Certificate</a></li>
-                <li><a href="transfer-certificate.html">Transfer Certificate</a></li>
-                <li><a href="appeal-revocation.html">Appeal Revocation</a></li>
-                <li><a href="revoke-certificate.html">Revoke Certificate</a></li>
-            </ul>
-        </nav>
-</header>
+    <div className='w3-bar w3-top w3-text-white w3-padding' style={{backgroundColor: '#2c3e50'}}>
+        <span className='w3-large w3-spaced'>Trust Certify</span>
+        <div className="w3-right">
+        <Link to='/certificate-issuance' className='w3-bar-item'>Issue Certificate</Link>
+        <Link to='/verify-certificate' className='w3-bar-item'>verify certificate</Link>
+        <Link to='/transfer-certificate' className='w3-bar-item'>Transfer certificate</Link>
+        <Link to='/appeal-revocation' className='w3-bar-item'>Appeal Revocation</Link>
+        <Link to='/rovoke-certificate' className='w3-bar-item'>Revoke Certificate</Link>
+        </div>
+        
+    </div>
     
   )
 }
