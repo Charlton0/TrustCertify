@@ -1,9 +1,11 @@
 import React from "react";
 import styles from "./certificatesIssuance.module.css";
+import Navigation from "./Navigation";
 
 const CertificateIssuance = () => {
   return (
     <>
+    <Navigation />
       <div className={styles.container}>
         <h1>Certificate Issuance</h1>
         <form action="#" method="POST">

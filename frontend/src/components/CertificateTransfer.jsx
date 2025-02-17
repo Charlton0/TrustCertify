@@ -1,9 +1,11 @@
 import React from 'react'
 import styles from "./certificateTransfer.module.css";
+import Navigation from './Navigation';
 
 const CertificateTransfer = () => {
   return (
     <>
+    <Navigation />
         <div className={StyleSheet.container}>
         <h1>Certificate Ownership Transfer</h1>
         <form action="/submit-transfer-request" method="post" enctype="multipart/form-data"/>

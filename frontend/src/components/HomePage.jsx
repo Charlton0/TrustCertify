@@ -1,6 +1,7 @@
 import React from 'react'
 import myImage from "../assets/pexels-pixabay-265072.jpg";
 import styles from "./HomePage.module.css"
+import Navigation from './Navigation';
 
 const myStyles = {
     backgroundImage: `url(${myImage})`,
@@ -14,18 +15,7 @@ const myStyles = {
 const HomePage = () => {
   return (
     <>
-     <header>
-        <h1>Welcome to TrustCertify</h1>
-        <nav>
-            <ul>
-                <li><a href="issue-certificate.html">Issue Certificate</a></li>
-                <li><a href="verify-certificate.html">Verify Certificate</a></li>
-                <li><a href="transfer-certificate.html">Transfer Certificate</a></li>
-                <li><a href="appeal-revocation.html">Appeal Revocation</a></li>
-                <li><a href="revoke-certificate.html">Revoke Certificate</a></li>
-            </ul>
-        </nav>
-    </header>
+     <Navigation />
 
     <section style={myStyles}>
         <h2>Introduction</h2>

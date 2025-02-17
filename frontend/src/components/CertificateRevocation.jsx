@@ -1,9 +1,11 @@
 import React from 'react'
 import styles from "./CertificateRevocation.module.css";
+import Navigation from './Navigation';
 
 const CertificateRevocation = () => {
   return (
     <>
+    <Navigation />
         <div className={styles.container}>
         <h1>Certificate Revocation</h1>
         <form action="/revoke-certificate" method="post">

@@ -1,8 +1,10 @@
 import React from 'react'
 import styles from "./RevocationAppeal.module.css"
+import Navigation from './Navigation';
 const RevocationAppeal = () => {
   return (
     <>
+    <Navigation />
      <div className={styles.container}>
         <h1>Appeal Certificate Revocation</h1>
         <form action="/submit-appeal" method="post" enctype="multipart/form-data">
