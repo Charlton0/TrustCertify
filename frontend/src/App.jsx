@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CertificateIssuance from "./components/CertificateIssuance";
 import CertificateVerification from "./components/CertificateVerification";
 import CertificateRevocation from "./components/CertificateRevocation";
@@ -15,17 +15,21 @@ function App() {
 
   return (
     <>
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/certificate-revocation" element={<CertificateRevocation />} />
-      <Route path="/certificate-transfer" element={<CertificateTransfer />} />
-      <Route path="/admin" element={<AdminPanel />} />
-      <Route path="/certificate-issuance" element={<CertificateIssuance />} />
-      <Route path="/revocation-appeal" element={<RevocationAppeal />} />
-      <Route path="/certificate-verification" element={<CertificateVerification />} />
-
-    </Routes>
-    
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/certificate-revocation"
+          element={<CertificateRevocation />}
+        />
+        <Route path="/certificate-transfer" element={<CertificateTransfer />} />
+        <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/certificate-issuance" element={<CertificateIssuance />} />
+        <Route path="/revocation-appeal" element={<RevocationAppeal />} />
+        <Route
+          path="/certificate-verification"
+          element={<CertificateVerification />}
+        />
+      </Routes>
     </>
   );
 }
