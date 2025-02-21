@@ -26,6 +26,9 @@ const Navigation = () => {
         <Link to="/certificate-revocation" className="w3-bar-item">
           Revoke Certificate
         </Link>
+        <Link to="/Approve-certificate" className="w3-bar-item">
+          Approve Cerrtificate
+        </Link>
         <button
           onClick={connectWallet}
           className="w3-button w3-grey w3-bar-item w3-round"

@@ -2,7 +2,7 @@ import Web3 from "web3";
 import { abi } from "./abi";
 
 export const web3 = new Web3(window.ethereum);
-const contractAddress = "0x6452692f6A24e2f80F6b4d1AaD5bce6AD58CcbFC";
+const contractAddress = "0xB3D708E2E1c09Bec1Cb11f9d906eB61BA88dA4B1";
 
 export const contract = new web3.eth.Contract(abi, contractAddress);
 

@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./certificateVerification.module.css";
 import Navigation from "./Navigation";
-import {useState} from "react";
-import { useEffect } from "react";
+import { contract, web3, checkConnection } from "../utils/web3Utils";
 
 const CertificateVerification = () => {
   const [certificateID, setCertificateID] = useState("");
