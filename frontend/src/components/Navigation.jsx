@@ -11,8 +11,8 @@ const Navigation = () => {
     >
       <span className="w3-large w3-spaced">Trust Certify</span>
       <div className="w3-right">
-        <Link to="/certificate-issuance" className="w3-bar-item">
-          Issue Certificate
+        <Link to="/propose-certificate" className="w3-bar-item">
+          Propose Certificate
         </Link>
         <Link to="/certificate-verification" className="w3-bar-item">
           verify certificate

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import CertificateIssuance from "./components/CertificateIssuance";
+import ProposeCertificate from "./components/ProposeCertificate";
 import CertificateVerification from "./components/CertificateVerification";
 import CertificateRevocation from "./components/CertificateRevocation";
 import CertificateTransfer from "./components/CertificateTransfer";
@@ -24,7 +24,7 @@ function App() {
         />
         <Route path="/certificate-transfer" element={<CertificateTransfer />} />
         <Route path="/admin" element={<AdminPanel />} />
-        <Route path="/certificate-issuance" element={<CertificateIssuance />} />
+        <Route path="/propose-certificate" element={<ProposeCertificate/>} />
         <Route path="/revocation-appeal" element={<RevocationAppeal />} />
         <Route
           path="/certificate-verification"

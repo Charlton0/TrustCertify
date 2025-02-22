@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./certificatesIssuance.module.css";
+import styles from "./ProposeCertificate.module.css";
 import Navigation from "./Navigation";
 import { contract, web3, checkConnection } from "../utils/web3Utils";
 

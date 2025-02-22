@@ -1,8 +1,54 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import styles from "./certificateTransfer.module.css";
 import Navigation from './Navigation';
+import { contract, web3, checkConnection } from "../utils/web3Utils";
 
 const CertificateTransfer = () => {
+
+     const [certificateID, setCertificateID] = useState("");
+     const [newOwnersAddress, setNewOwnersAddress] = useState("");
+     const [accounts, setAccounts] = useState(null);
+
+      const checkConnection = async () => {
+         if (window.ethereum) {
+           try {
+             const accounts = await web3.eth.getAccounts();
+             if (accounts.length > 0) {
+               setAccounts(accounts[0]);
+     
+               return accounts[0];
+             } else {
+               console.log("no accounts were found");
+               return null;
+             }
+           } catch (e) {
+             console.error("error connecting to wallet " + e);
+             return null;
+           }
+         } else {
+           console.log("you need to install your metamask");
+         }
+       };
+     
+       useEffect(() => {
+         checkConnection();
+       }, []);
+     
+       const certificateTransfer = async () => {
+         console.log({certificateID,newOwnersAddress});
+             if (window.ethereum) {
+               if (accounts) {
+                 const gas = await contract.methods
+                   .certificateTransfer(certificateID,newOwnersAddress)
+                   .estimateGas({ from: accounts });
+                 const tx = await contract.methods
+                   .certificateTransfer(certificateID,newOwnersAddress)
+                   .send({ from: accounts, gas });
+                 console.log(tx);
+               }
+             }
+           };
+         
   return (
     <>
     <Navigation />
@@ -12,46 +58,31 @@ const CertificateTransfer = () => {
         
             <div className={styles.form_group}>
                 <label for="certificateId">Certificate ID</label>
-                <input type="text" id="certificateId" name="certificateId" required/>
-            </div>
-            
-                 <div className={styles.form_group}>
-                <label for="currentOwnerName">Current Owner's Name</label>
-                <input type="text" id="currentOwnerName" name="currentOwnerName" required/>
-            </div>
-            
-            <div className={styles.form_group}>
-                <label for="currentOwnerEmail">Current Owner's Email</label>
-                <input type="email" id="currentOwnerEmail" name="currentOwnerEmail" required/>
+                <input
+                 type="text" 
+                 id="certificateId"
+                name="certificateId" required
+                onChange={(e) => {
+                    setCertificateID(e.target.value);
+                  }}
+                />
             </div>
             
             <div className={styles.form_group}>
-                <label for="currentOwnerPhone">Current Owner's Phone Number</label>
-                <input type="text" id="currentOwnerPhone" name="currentOwnerPhone" required/>
+           <label for="newOwnersAddress">New Owner's Address</label>
+            <input 
+            type="text"
+             id="newOwnerAddress" 
+             address="newOwnerAddress" required
+             onChange={(e) => {
+                setNewOwnersAddress(e.target.value);
+              }}
+             />
             </div>
             
-            <div className={styles.form_group}>
-                <label for="newOwnerName">New Owner's Name</label>
-                <input type="text" id="newOwnerName" name="newOwnerName" required/>
-            </div>
-            
-            <div className={styles.form_group}>
-                <label for="newOwnerEmail">New Owner's Email</label>
-                <input type="email" id="newOwnerEmail" name="newOwnerEmail" required/>
-            </div>
-            
-            <div className={styles.form_group}>
-                <label for="newOwnerPhone">New Owner's Phone Number</label>
-                <input type="text" id="newOwnerPhone" name="newOwnerPhone" required/>
-            </div>
-        
-            <div className={styles.form_group}>
-                <label for="transferSupportingDocuments">Upload Supporting Documents (optional)</label>
-                <input type="file" id="transferSupportingDocuments" name="transferSupportingDocuments" accept=".pdf,.jpg,.png,.docx"/>
-            </div>
-    
-            
-                <button type="submit" className={styles.btn}>
+             <button type="button"
+             onClick={CertificateTransfer}
+              className={styles.btn}>
                     Submit Transfer Request
                     </button>
                     </div>
