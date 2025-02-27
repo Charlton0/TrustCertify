@@ -1,9 +1,41 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import styles from "./HomePage.module.css";
 import { Link } from "react-router-dom";
 import { connectWallet } from "../utils/web3Utils";
 
 const Navigation = () => {
+  const [accounts, setAccounts] = useState(null);
+
+  const checkConnection = async () => {
+    if (window.ethereum) {
+      try {
+        const accounts = await window.ethereum
+          .request({ method: "eth_requestAccounts" })
+          .then(function (accounts) {
+            console.log("Accounts:", accounts);
+            return accounts;
+          });
+
+        if (accounts.length > 0) {
+          setAccounts(accounts[0]);
+
+          return accounts[0];
+        } else {
+          console.log("no accounts were found");
+          return null;
+        }
+      } catch (e) {
+        console.error("error connecting to wallet " + e);
+        return null;
+      }
+    } else {
+      console.log("you need to install your metamask");
+    }
+  };
+
+  useEffect(() => {
+    checkConnection();
+  }, []);
   return (
     <div
       className="w3-bar w3-top w3-text-white w3-padding"
@@ -29,12 +61,19 @@ const Navigation = () => {
         <Link to="/Approve-certificate" className="w3-bar-item">
           Approve Cerrtificate
         </Link>
-        <button
-          onClick={connectWallet}
-          className="w3-button w3-grey w3-bar-item w3-round"
-        >
-          Connect Wallet
-        </button>
+
+        {accounts ? (
+          <span className="w3-bar-item">
+            {accounts.slice(0, 6) + "..." + accounts.slice(accounts.length - 6)}
+          </span>
+        ) : (
+          <button
+            onClick={connectWallet}
+            className="w3-button w3-grey w3-bar-item w3-round"
+          >
+            Connect Wallet
+          </button>
+        )}
       </div>
     </div>
   );

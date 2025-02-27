@@ -20,9 +20,9 @@ export const abi = [
     inputs: [
       {
         indexed: true,
-        internalType: "bytes32",
+        internalType: "uint256",
         name: "certificateId",
-        type: "bytes32",
+        type: "uint256",
       },
       {
         indexed: false,
@@ -39,9 +39,9 @@ export const abi = [
     inputs: [
       {
         indexed: true,
-        internalType: "bytes32",
+        internalType: "uint256",
         name: "certificateId",
-        type: "bytes32",
+        type: "uint256",
       },
       {
         indexed: false,
@@ -76,9 +76,9 @@ export const abi = [
     inputs: [
       {
         indexed: true,
-        internalType: "bytes32",
+        internalType: "uint256",
         name: "certificateId",
-        type: "bytes32",
+        type: "uint256",
       },
       {
         indexed: false,
@@ -107,9 +107,9 @@ export const abi = [
     inputs: [
       {
         indexed: true,
-        internalType: "bytes32",
+        internalType: "uint256",
         name: "certificateId",
-        type: "bytes32",
+        type: "uint256",
       },
     ],
     name: "CertificateRestored",
@@ -120,9 +120,9 @@ export const abi = [
     inputs: [
       {
         indexed: true,
-        internalType: "bytes32",
+        internalType: "uint256",
         name: "certificateId",
-        type: "bytes32",
+        type: "uint256",
       },
     ],
     name: "CertificateRevoked",
@@ -133,9 +133,9 @@ export const abi = [
     inputs: [
       {
         indexed: true,
-        internalType: "bytes32",
+        internalType: "uint256",
         name: "certificateId",
-        type: "bytes32",
+        type: "uint256",
       },
       {
         indexed: false,
@@ -152,9 +152,9 @@ export const abi = [
     inputs: [
       {
         indexed: true,
-        internalType: "bytes32",
+        internalType: "uint256",
         name: "certificateId",
-        type: "bytes32",
+        type: "uint256",
       },
       {
         indexed: false,
@@ -171,9 +171,9 @@ export const abi = [
     inputs: [
       {
         indexed: true,
-        internalType: "bytes32",
+        internalType: "uint256",
         name: "certificateId",
-        type: "bytes32",
+        type: "uint256",
       },
       {
         indexed: false,
@@ -209,6 +209,7 @@ export const abi = [
     ],
     stateMutability: "view",
     type: "function",
+    constant: true,
   },
   {
     inputs: [],
@@ -222,13 +223,14 @@ export const abi = [
     ],
     stateMutability: "view",
     type: "function",
+    constant: true,
   },
   {
     inputs: [
       {
-        internalType: "bytes32",
+        internalType: "uint256",
         name: "",
-        type: "bytes32",
+        type: "uint256",
       },
     ],
     name: "certificates",
@@ -266,13 +268,14 @@ export const abi = [
     ],
     stateMutability: "view",
     type: "function",
+    constant: true,
   },
   {
     inputs: [
       {
-        internalType: "bytes32",
+        internalType: "uint256",
         name: "",
-        type: "bytes32",
+        type: "uint256",
       },
     ],
     name: "pendingCertificates",
@@ -300,6 +303,7 @@ export const abi = [
     ],
     stateMutability: "view",
     type: "function",
+    constant: true,
   },
   {
     inputs: [],
@@ -313,13 +317,14 @@ export const abi = [
     ],
     stateMutability: "view",
     type: "function",
+    constant: true,
   },
   {
     inputs: [
       {
-        internalType: "bytes32",
+        internalType: "uint256",
         name: "",
-        type: "bytes32",
+        type: "uint256",
       },
     ],
     name: "revocationAppeals",
@@ -347,13 +352,14 @@ export const abi = [
     ],
     stateMutability: "view",
     type: "function",
+    constant: true,
   },
   {
     inputs: [
       {
-        internalType: "bytes32",
+        internalType: "uint256",
         name: "",
-        type: "bytes32",
+        type: "uint256",
       },
     ],
     name: "revocationReasons",
@@ -366,6 +372,7 @@ export const abi = [
     ],
     stateMutability: "view",
     type: "function",
+    constant: true,
   },
   {
     inputs: [
@@ -388,9 +395,9 @@ export const abi = [
     name: "proposeCertificate",
     outputs: [
       {
-        internalType: "bytes32",
+        internalType: "uint256",
         name: "",
-        type: "bytes32",
+        type: "uint256",
       },
     ],
     stateMutability: "nonpayable",
@@ -399,9 +406,9 @@ export const abi = [
   {
     inputs: [
       {
-        internalType: "bytes32",
+        internalType: "uint256",
         name: "certificateId",
-        type: "bytes32",
+        type: "uint256",
       },
     ],
     name: "approveCertificate",
@@ -412,9 +419,9 @@ export const abi = [
   {
     inputs: [
       {
-        internalType: "bytes32",
+        internalType: "uint256",
         name: "certificateId",
-        type: "bytes32",
+        type: "uint256",
       },
       {
         internalType: "string",
@@ -430,9 +437,9 @@ export const abi = [
   {
     inputs: [
       {
-        internalType: "bytes32",
+        internalType: "uint256",
         name: "certificateId",
-        type: "bytes32",
+        type: "uint256",
       },
       {
         internalType: "string",
@@ -448,9 +455,9 @@ export const abi = [
   {
     inputs: [
       {
-        internalType: "bytes32",
+        internalType: "uint256",
         name: "certificateId",
-        type: "bytes32",
+        type: "uint256",
       },
     ],
     name: "approveRevocationAppeal",
@@ -461,9 +468,9 @@ export const abi = [
   {
     inputs: [
       {
-        internalType: "bytes32",
+        internalType: "uint256",
         name: "certificateId",
-        type: "bytes32",
+        type: "uint256",
       },
       {
         internalType: "address",
@@ -479,9 +486,9 @@ export const abi = [
   {
     inputs: [
       {
-        internalType: "bytes32",
+        internalType: "uint256",
         name: "certificateId",
-        type: "bytes32",
+        type: "uint256",
       },
     ],
     name: "verifyCertificate",
@@ -499,5 +506,6 @@ export const abi = [
     ],
     stateMutability: "view",
     type: "function",
+    constant: true,
   },
 ];

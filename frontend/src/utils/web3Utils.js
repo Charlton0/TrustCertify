@@ -2,13 +2,25 @@ import Web3 from "web3";
 import { abi } from "./abi";
 
 export const web3 = new Web3(window.ethereum);
-const contractAddress = "0xB3D708E2E1c09Bec1Cb11f9d906eB61BA88dA4B1";
-
+const contractAddress = "0xd983b36e4bBe9649492d3f45A4743c9888497463";
 export const contract = new web3.eth.Contract(abi, contractAddress);
+console.log(abi);
 
 export async function connectWallet() {
-  await window.web3.currentProvider.enable();
-  window.web3 = new Web3(window.web3.currentProvider);
+  if (typeof window.ethereum !== "undefined") {
+    // Request account access
+    const accounts = await window.ethereum
+      .request({ method: "eth_requestAccounts" })
+      .then(function (accounts) {
+        console.log("Accounts:", accounts);
+        return accounts;
+      })
+      .catch(function (error) {
+        console.error("User  denied account access:", error);
+      });
+  } else {
+    console.log("MetaMask is not installed!");
+  }
 }
 
 export const checkConnection = async () => {

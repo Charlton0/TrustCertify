@@ -42,16 +42,16 @@ contract CertificateVerification {
     uint public certificateCount;
 
     // Mapping of certificate IDs to Certificate structs
-    mapping(bytes32 => Certificate) public certificates;
+    mapping(uint => Certificate) public certificates;
 
     // Mapping of pending certificate IDs to PendingCertificate structs
-    mapping(bytes32 => PendingCertificate) public pendingCertificates;
+    mapping(uint => PendingCertificate) public pendingCertificates;
 
     // Mapping of revocation reasons 
-    mapping(bytes32 => string) public revocationReasons;
+    mapping(uint => string) public revocationReasons;
 
     // Mapping of revocation appeals
-    mapping(bytes32 => RevocationAppeal) public revocationAppeals;
+    mapping(uint => RevocationAppeal) public revocationAppeals;
 
     //Array to hold the addresses of  authorizedSigners
     address[] public authorizedSigners;
@@ -61,26 +61,26 @@ contract CertificateVerification {
 
     // Events
     event CertificateIssued(
-        bytes32 indexed certificateId,
+        uint indexed certificateId,
         string studentName,
         string courseName,
         string institutionName,
         uint issueDate
     );
 
-    event CertificateRevoked(bytes32 indexed certificateId);
+    event CertificateRevoked(uint indexed certificateId);
 
     event CertificateProposed(
-        bytes32 indexed certificateId,
+        uint indexed certificateId,
         string studentName,
         string courseName,
         string institutionName
     );
-    event CertificateApproved(bytes32 indexed certificateId, address approver);
-    event CertificateTransferred(bytes32 indexed certificateId, address newOwner);
-    event RevocationAppealed(bytes32 indexed certificateId, address student, string reason);
-    event RevocationAppealApproved(bytes32 indexed certificateId, address approver);
-    event CertificateRestored(bytes32 indexed certificateId);
+    event CertificateApproved(uint indexed certificateId, address approver);
+    event CertificateTransferred(uint indexed certificateId, address newOwner);
+    event RevocationAppealed(uint indexed certificateId, address student, string reason);
+    event RevocationAppealApproved(uint indexed certificateId, address approver);
+    event CertificateRestored(uint indexed certificateId);
 
     // Modifier to restrict access to authorized signers
     modifier onlyAuthorizedSigner() {
@@ -102,17 +102,19 @@ contract CertificateVerification {
         quorum = _quorum;
     }
 
+    // function getProductCount() public view returns(uint) {
+    //     return 
+    // }
+
     // Function to propose a certificate
     function proposeCertificate(
         string memory studentName,
         string memory courseName,
         string memory institutionName
-    ) public onlyAuthorizedSigner returns (bytes32) {
+    ) public onlyAuthorizedSigner returns (uint) {
 
         // Generate a unique certificate ID
-        bytes32 certificateId = keccak256(
-            abi.encodePacked(studentName, courseName, institutionName, block.timestamp)
-        );
+        uint certificateId = certificateCount;
 
         // Ensure the certificate is not already issued or pending
         require(certificates[certificateId].issueDate == 0, "Certificate already issued");
@@ -127,11 +129,13 @@ contract CertificateVerification {
         // Emit the CertificateProposed event
         emit CertificateProposed(certificateId, studentName, courseName, institutionName);
 
+        certificateCount++;
+
         return certificateId;
     }
 
     // Function to approve a certificate
-    function approveCertificate(bytes32 certificateId) public onlyAuthorizedSigner {
+    function approveCertificate(uint certificateId) public onlyAuthorizedSigner {
         PendingCertificate storage pending = pendingCertificates[certificateId];
 
         // Ensure the certificate proposal exists
@@ -154,7 +158,7 @@ contract CertificateVerification {
     }
 
     // Function to issue a certificate
-    function _issueCertificate(bytes32 certificateId, PendingCertificate storage pending) internal {
+    function _issueCertificate(uint certificateId, PendingCertificate storage pending) internal {
         certificates[certificateId] = Certificate({
             studentName: pending.studentName,
             courseName: pending.courseName,
@@ -178,7 +182,7 @@ contract CertificateVerification {
     }
 
     // Function to revoke a certificate
-    function revokeCertificate(bytes32 certificateId, string memory reason) public onlyAuthorizedSigner {
+    function revokeCertificate(uint certificateId, string memory reason) public onlyAuthorizedSigner {
     require(certificates[certificateId].issueDate != 0, "Certificate does not exist");
     certificates[certificateId].isRevoked = true;
     revocationReasons[certificateId] = reason;
@@ -187,7 +191,7 @@ contract CertificateVerification {
 }
 
     // Function to allow a certificate owner to appeal incase of unfair revocation
-    function appealRevocation(bytes32 certificateId, string memory reason) public {
+    function appealRevocation(uint certificateId, string memory reason) public {
     require(certificates[certificateId].isRevoked, "Certificate is not revoked");
     require(certificates[certificateId].owner == msg.sender, "Only certificate owner can appeal");
 
@@ -202,7 +206,7 @@ contract CertificateVerification {
 }
 
     // Function to approve a revocked certificate incase of any appeal
-    function approveRevocationAppeal(bytes32 certificateId) public onlyAuthorizedSigner {
+    function approveRevocationAppeal(uint certificateId) public onlyAuthorizedSigner {
         RevocationAppeal storage appeal = revocationAppeals[certificateId];
         require(!appeal.resolved, "Appeal already resolved");
         require(!appeal.approvedBy[msg.sender], "Already approved");
@@ -219,7 +223,7 @@ contract CertificateVerification {
     }
 
      // Function to transfer ownership of a certificate
-    function transferCertificate(bytes32 certificateId, address newOwner) public {
+    function transferCertificate(uint certificateId, address newOwner) public {
         require(certificates[certificateId].owner == msg.sender, "Only the certificate owner can transfer");
         require(newOwner != address(0), "Invalid address");
         certificates[certificateId].owner = newOwner;
@@ -228,7 +232,7 @@ contract CertificateVerification {
 
 
     // Function to verify a certificate
-    function verifyCertificate(bytes32 certificateId) public view returns (bool, string memory) {
+    function verifyCertificate(uint certificateId) public view returns (bool, string memory) {
         Certificate memory cert = certificates[certificateId];
         if (cert.issueDate == 0) {
             return (false, "Certificate does not exist");
