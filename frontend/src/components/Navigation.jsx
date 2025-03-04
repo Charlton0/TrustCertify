@@ -61,6 +61,9 @@ const Navigation = () => {
         <Link to="/Approve-certificate" className="w3-bar-item">
           Approve Cerrtificate
         </Link>
+        <Link to="/admin" className="w3-bar-item">
+          Admin Panel
+        </Link>
 
         {accounts ? (
           <span className="w3-bar-item">
