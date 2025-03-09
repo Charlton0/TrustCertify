@@ -6,7 +6,7 @@ import { contract, web3, checkConnection } from "../utils/web3Utils";
 const RevocationAppeal = () => {
 
    const [certificateID, setCertificateID] = useState("");
-   const [appealReason, setAppealResason] = useState("");
+   const [appealReason, setAppealReason] = useState("");
    const [accounts, setAccounts] = useState(null); 
 
      const checkConnection = async () => {
@@ -76,7 +76,7 @@ const RevocationAppeal = () => {
                  id="appealReason"
                   name="appealReason"
                   onChange={(e) => {
-                    setappealReason(e.target.value);
+                    setAppealReason(e.target.value);
                   }}
                   placeholder="Enter appealReason"
                    required

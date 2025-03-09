@@ -4,6 +4,12 @@ import Navigation from "./Navigation";
 import { contract, web3, checkConnection } from "../utils/web3Utils";
 
 const AdminPanel = () => {
+   const [viewDetails, setViewDetails] = useState("");
+    const [issuenewCertificate, setIssuenewCertificate] = useState("");
+    const [Approve, setApprove] = useState("");
+    const [Reject, setReject] = useState("");
+    const [viewProfile, setViewProfile] = useState("");
+    const [authorizedSigners, setAuthorizedSigners] = useState("");
     const [accounts, setAccounts] = useState(null);
 
     const checkConnection = async () => {
@@ -27,9 +33,28 @@ const AdminPanel = () => {
         }
       };
 
+       async function only_AuthorizedSigner() {
+        // console.log(contract.methods)
+          try {
+            
+            const data = await contract.methods.authorizedSigners("0").call()
+            console.log(data)
+
+
+          } catch (e) {
+            console.log("error " + e);
+          }
+        }
+
       useEffect(() => {
         checkConnection();
       }, []);
+
+       useEffect(() => {
+          if (contract) {
+            only_AuthorizedSigner();
+          }
+        }, []);
   return (
     <>
     <Navigation />

@@ -2,9 +2,9 @@ import Web3 from "web3";
 import { abi } from "./abi";
 
 export const web3 = new Web3(window.ethereum);
-const contractAddress = "0xd983b36e4bBe9649492d3f45A4743c9888497463";
+const contractAddress = "0xfA7F54Eae68C97c078a733aaC48d01EF4466935A";
 export const contract = new web3.eth.Contract(abi, contractAddress);
-console.log(abi);
+// console.log(abi);
 
 export async function connectWallet() {
   if (typeof window.ethereum !== "undefined") {
