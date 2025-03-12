@@ -1,8 +1,11 @@
 import Web3 from "web3";
 import { abi } from "./abi";
+import { useState, createContext } from "react";
 
-export const web3 = new Web3(window.ethereum);
-const contractAddress = "0xfA7F54Eae68C97c078a733aaC48d01EF4466935A";
+const UserContext = createContext();
+
+export const web3 = new Web3("HTTP://127.0.0.1:7545");
+const contractAddress = "0xA9000e1F0b9e8ABbc04ec8e89655eB4c257dF656";
 export const contract = new web3.eth.Contract(abi, contractAddress);
 // console.log(abi);
 
@@ -41,3 +44,19 @@ export const checkConnection = async () => {
     console.log("you need to install your metamask");
   }
 };
+
+async function only_AuthorizedSigner() {
+ 
+  // console.log(contract.methods)
+  try {
+    const data = await contract.methods.viewSigners().call();
+    console.log(data);
+  
+  } catch (e) {
+    console.log("error " + e);
+  }
+
+  return <UserContext.Provider>
+    
+  </UserContext.Provider>
+}

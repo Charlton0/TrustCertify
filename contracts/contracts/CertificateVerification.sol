@@ -242,4 +242,8 @@ contract CertificateVerification {
         }
         return (true, "Certificate is valid");
     }
+
+    function viewSigners() public view returns (address[] memory) {
+        return authorizedSigners;
+    }
 }
