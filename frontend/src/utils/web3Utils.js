@@ -5,7 +5,7 @@ import { useState, createContext } from "react";
 const UserContext = createContext();
 
 export const web3 = new Web3("HTTP://127.0.0.1:7545");
-const contractAddress = "0xA9000e1F0b9e8ABbc04ec8e89655eB4c257dF656";
+const contractAddress = "0xe4ec5e6d405b1c57865e127708334f217e61b854";
 export const contract = new web3.eth.Contract(abi, contractAddress);
 // console.log(abi);
 
@@ -46,17 +46,13 @@ export const checkConnection = async () => {
 };
 
 async function only_AuthorizedSigner() {
- 
   // console.log(contract.methods)
   try {
     const data = await contract.methods.viewSigners().call();
     console.log(data);
-  
   } catch (e) {
     console.log("error " + e);
   }
 
-  return <UserContext.Provider>
-    
-  </UserContext.Provider>
+  // return <UserContext.Provider></UserContext.Provider>;
 }
