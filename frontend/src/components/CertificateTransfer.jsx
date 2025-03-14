@@ -51,6 +51,8 @@ const CertificateTransfer = () => {
   return (
     <>
       <Navigation />
+      <br />
+      <br />
       <div className={StyleSheet.container}>
         <h1>Certificate Ownership Transfer</h1>
         <form

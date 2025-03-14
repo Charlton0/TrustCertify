@@ -50,6 +50,8 @@ const CertificateVerification = () => {
   return (
     <>
       <Navigation />
+      <br />
+      <br />
       <div className={styles.container}>
         <h2>Certificate Verification</h2>
         <p>Enter the Certificate ID to verify its authenticity.</p>
