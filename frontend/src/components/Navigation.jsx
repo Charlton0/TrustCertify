@@ -3,7 +3,7 @@ import styles from "./HomePage.module.css";
 import { Link } from "react-router-dom";
 import { connectWallet } from "../utils/web3Utils";
 
-const Navigation = ({ authorisedSigners }) => {
+const Navigation = ({ authorizedSigners = [] }) => {
   const [accounts, setAccounts] = useState(null);
   console.log(accounts);
 
@@ -45,7 +45,7 @@ const Navigation = ({ authorisedSigners }) => {
       <span className="w3-large w3-spaced">Trust Certify</span>
 
       <div className="w3-right">
-        {authorisedSigners.includes(accounts) && (
+        {authorizedSigners.includes(accounts) && (
           <Link to="/propose-certificate" className="w3-bar-item">
             Propose Certificate
           </Link>
@@ -59,13 +59,13 @@ const Navigation = ({ authorisedSigners }) => {
         <Link to="/revocation-appeal" className="w3-bar-item">
           Appeal Revocation
         </Link>
-        {authorisedSigners.includes(accounts) && (
+        {authorizedSigners.includes(accounts) && (
           <>
             <Link to="/certificate-revocation" className="w3-bar-item">
               Revoke Certificate
             </Link>
             <Link to="/Approve-certificate" className="w3-bar-item">
-              Approve Cerrtificate
+              Approve Certificate
             </Link>
             <Link to="/admin" className="w3-bar-item">
               Admin Panel
