@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import styles from "./HomePage.module.css";
 import { Link } from "react-router-dom";
-import { connectWallet } from "../utils/web3Utils";
+import { connectWallet, contract } from "../utils/web3Utils";
 
-const Navigation = ({ authorizedSigners = [] }) => {
-  const [accounts, setAccounts] = useState(null);
+const Navigation = () => {
+  const [authorizedSigners, setAuthorizedSigners] = useState([]);
+  const [accounts, setAccounts] = useState("");
   console.log(accounts);
 
   const checkConnection = async () => {
@@ -34,6 +35,24 @@ const Navigation = ({ authorizedSigners = [] }) => {
     }
   };
 
+  async function only_AuthorizedSigner() {
+    // console.log(contract.methods)
+    try {
+      const data = await contract.methods.viewSigners().call();
+      const data2 = data.map((e) => e.toLowerCase());
+      console.log(data2);
+      setAuthorizedSigners(data2);
+    } catch (e) {
+      console.log("error " + e);
+    }
+  }
+
+  useEffect(() => {
+    if (contract) {
+      only_AuthorizedSigner();
+    }
+  }, [contract]);
+
   useEffect(() => {
     checkConnection();
   }, []);
@@ -45,7 +64,7 @@ const Navigation = ({ authorizedSigners = [] }) => {
       <span className="w3-large w3-spaced">Trust Certify</span>
 
       <div className="w3-right">
-        {authorizedSigners.includes(accounts) && (
+        {authorizedSigners.includes(accounts.toLowerCase()) && (
           <Link to="/propose-certificate" className="w3-bar-item">
             Propose Certificate
           </Link>
@@ -59,13 +78,14 @@ const Navigation = ({ authorizedSigners = [] }) => {
         <Link to="/revocation-appeal" className="w3-bar-item">
           Appeal Revocation
         </Link>
-        {authorizedSigners.includes(accounts) && (
+        {console.log(accounts)}
+        {authorizedSigners.includes(accounts.toLowerCase()) && (
           <>
             <Link to="/certificate-revocation" className="w3-bar-item">
               Revoke Certificate
             </Link>
             <Link to="/Approve-certificate" className="w3-bar-item">
-              Approve Certificate
+              Approve Cer tificate
             </Link>
             <Link to="/admin" className="w3-bar-item">
               Admin Panel

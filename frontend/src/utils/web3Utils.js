@@ -4,7 +4,7 @@ import { useState, createContext } from "react";
 
 const UserContext = createContext();
 
-export const web3 = new Web3("HTTP://127.0.0.1:7545");
+export const web3 = new Web3(window.ethereum);
 const contractAddress = "0xe4ec5e6d405b1c57865e127708334f217e61b854";
 export const contract = new web3.eth.Contract(abi, contractAddress);
 // console.log(abi);
