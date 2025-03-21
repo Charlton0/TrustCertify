@@ -8,6 +8,7 @@ const AdminPanel = () => {
   const [issuenewCertificate, setIssuenewCertificate] = useState("");
   const [Approve, setApprove] = useState("");
   const [authorisedSigners, setAuthorizedSigners] = useState([]);
+  const [approvedCertificates, setApprovedCertificates] = useState([]);
   const [Reject, setReject] = useState("");
   const [viewProfile, setViewProfile] = useState("");
   const [accounts, setAccounts] = useState(null);
@@ -33,6 +34,23 @@ const AdminPanel = () => {
     }
   };
 
+  async function view_certificate() {
+    try {
+      let displayedData = [];
+      const dataCount = await contract.methods.certificateCount().call();
+      console.log(dataCount);
+      for (let i = 0; i < dataCount.toString(); i++) {
+        const data = await contract.methods.pendingCertificates(i).call();
+        displayedData.push({ ...data, id: i });
+      }
+
+      console.log(displayedData);
+      setApprovedCertificates(displayedData);
+    } catch (e) {
+      console.log("error " + e);
+    }
+  }
+
   async function only_AuthorizedSigner() {
     // console.log(contract.methods)
     try {
@@ -46,6 +64,10 @@ const AdminPanel = () => {
 
   useEffect(() => {
     checkConnection();
+  }, []);
+
+  useEffect(() => {
+    view_certificate();
   }, []);
 
   useEffect(() => {
@@ -69,44 +91,23 @@ const AdminPanel = () => {
           <div className={styles.panel_section}>
             <h2>Manage Certificates</h2>
             <ul>
-              <li>
-                Certificate ID: 12345 -
-                <button
-                  type="button"
-                  onClick={viewDetails}
-                  className={styles.btn}
-                >
-                  View Details
-                </button>
-              </li>
-              <li>
-                Certificate ID: 67890 -
-                <button
-                  type="button"
-                  onClick={viewDetails}
-                  className={styles.btn}
-                >
-                  View Details
-                </button>
-              </li>
-              <li>
-                Certificate ID: 11223 -
-                <button
-                  type="button"
-                  onClick={viewDetails}
-                  className={styles.btn}
-                >
-                  View Details
-                </button>
-              </li>
+              {approvedCertificates
+                ? approvedCertificates.map((certificate) => {
+                    return (
+                      <li>
+                        Certificate id: {certificate.id}
+                        <button
+                          type="button"
+                          onClick={viewDetails}
+                          className={styles.btn}
+                        >
+                          View Details
+                        </button>
+                      </li>
+                    );
+                  })
+                : ""}
             </ul>
-            <button
-              type="button"
-              onClick={issuenewCertificate}
-              className={styles.btn}
-            >
-              Issue New Certificate
-            </button>
           </div>
 
           <div className={styles.panel_section}>
@@ -141,42 +142,6 @@ const AdminPanel = () => {
               </li>
             </ul>
           </div>
-        </div>
-
-        <div className={styles.panel_section}>
-          <h2>View Users</h2>
-          <ul>
-            <li>
-              User: Billy Juma (Admin) -
-              <button
-                type="button"
-                onClick={viewProfile}
-                className={styles.btn}
-              >
-                View Profile
-              </button>
-            </li>
-            <li>
-              User: Jane Wangari (Signer) -
-              <button
-                type="button"
-                onClick={viewProfile}
-                className={styles.btn}
-              >
-                View Profile
-              </button>
-            </li>
-            <li>
-              User: Stephen Mwendwa (Signer) -
-              <button
-                type="button"
-                onClick={viewProfile}
-                className={styles.btn}
-              >
-                View Profile
-              </button>
-            </li>
-          </ul>
         </div>
       </div>
     </>

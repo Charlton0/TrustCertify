@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import styles from "./ApproveCertificate.module.css";
 import { web3, contract } from "../utils/web3Utils";
