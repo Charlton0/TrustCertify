@@ -32,13 +32,13 @@ const HomePage = () => {
               certificates, students can manage their credentials, and verifiers
               can authenticate them securely on the blockchain.
             </p>
-            <a
+            {/* <a
               href="verify-certificate.html"
               className="cta-button w3-button"
               style={{ backgroundColor: "#2c3e50" }}
             >
               Verify a Certificate
-            </a>
+            </a> */}
           </div>
         </div>
       </div>
